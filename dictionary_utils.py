@@ -1,6 +1,56 @@
 ## Confirm determinism
 import json
 
+##############################################################################################################
+## Megadan print functions
+## Megadan is the nickname of a small expiment: continuing autodan after a successful jailbreak
+## to see how jailbreaks evolve
+##############################################################################################################
+
+def print_success_string(results, prompt_number):
+    ans = ""
+    for b in results[prompt_number]["log"]["success"]:
+        if b:
+            ans += "1"
+        else:
+            ans += "0"
+    print(ans)
+
+def print_successive_jailbreaks(results, prompt_number):
+    dic = results[prompt_number]["log"]
+    current_suffix = ""
+    for i in range(len(dic["success"])):
+        if dic["success"][i]:
+            if dic["suffix"][i] == current_suffix:
+                print(f"same suffix")
+            else:
+                current_suffix = dic["suffix"][i]
+                print(f"Success at step {i}: {dic['suffix'][i]}")
+
+def print_successive_jailbroken_responses(results, prompt_number, trim = 10000):
+    print(f"The target string is:################################# \n {results[prompt_number]['target']} \n")
+    current_respond = ""
+    count = 0
+    dic = results[prompt_number]["log"]
+    for i in range(len(dic["success"])):
+        if dic["success"][i]:
+            if current_respond == dic["respond"][i]:
+                count += 1
+            else:
+                if count > 0:
+                    print(f"{count} successive jailbreaks at step {i - count}: ################################# \n {current_respond[:trim]} \n ")
+                count = 1
+                current_respond = dic["respond"][i] 
+        else:
+            if count > 0:
+                print(f"{count} successive jailbreaks at step {i - count}: ################################# \n {current_respond[:trim]} \n ")
+                count = 0
+                current_respond = ""
+
+##############################################################################################################
+## Autodan output print functions
+##############################################################################################################
+
 def print_keys(results):
     print(results["0"].keys())
 
@@ -34,7 +84,7 @@ def print_jailbroken(results, number = None):
 def print_jailbreak(results, number):
     print(f"{number}: {results[number]['final_suffix']}")
 
-def check_in_log_for_differences(results):
+def check_in_log_for_differences(results, prompt_number):
     current_suf = ""
     for suf in results[prompt_number]["log"]["suffix"]:
         if suf == current_suf:
@@ -42,8 +92,35 @@ def check_in_log_for_differences(results):
         current_suf = suf
         print(suf)
 
-def print_output(results, prompt_number):
+def print_autodan_output(results, prompt_number):
     print(f"FINAL RESPOND: \n\n {results[prompt_number]['final_respond']}")
+
+
+
+
+##############################################################################################################
+## Inference output print functions
+##############################################################################################################
+
+
+def print_inference_output(results, number):
+    print(f"{number}: {results[number]['goal']} : \n OUTPUT: {results[number]['output']}")
+
+def full_print_single_output(results, number):
+    print(f"{number}: {results[number]['goal']}")
+    print(f"TARGET: {results[number]['target']}")
+    print(f"TEXT PROMPT: {results[number]['user_text_prompt']}")
+    print(f"OUTPUT: {results[number]['output']}")
+    print(f"JAILBROKEN: {results[number]['jailbroken']}")
+
+
+##############################################################################################################
+## Checking output differences
+## For most modifications, you get perfect identification because of deterministic inference
+## In the case of some modifications, batch inference for example,
+## you get variations of the output after a certain time, which I explain by numeric instability,
+## this remains to be confirmed
+##############################################################################################################
 
 def first_difference_index(a, b):
     max_idx = min(len(a), len(b))
@@ -100,6 +177,10 @@ def confirm_determinism(attack_logfile, defense_testing_results):
         print(f"Determinism confirmed:\n {attack_logfile}\n {defense_testing_results}")
     else:
         print(f"Nondeterministic on {num_queries - count} out of {num_queries} queries")
+
+##############################################################################################################
+## Main function to run on command line
+##############################################################################################################
 
 
 if __name__ == "__main__":
