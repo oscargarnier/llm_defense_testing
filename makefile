@@ -8,16 +8,18 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = performance 
+SAVE_SUFFIX = besteffort 
 NIGHT_SUFFIX = complete
 
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_regular.json" \
+		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_besteffort.json" \
 		--max_new_tokens 512 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--inference_batch_size 6
+		--inference_batch_size 6 \
+		--target_model llama2 
+
 
 confirm_determinism:
 	python dictionary_utils.py \
@@ -27,10 +29,10 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/smaller_behaviors.csv \
+		--dataset_path data/advbench/best_effort.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--model vicuna \
+		--model llama2 \
 
 smooth_llm_evaluate:
 	python evaluate_defenses.py \
