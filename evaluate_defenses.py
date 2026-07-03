@@ -47,7 +47,14 @@ def main(args):
         save_suffix=args.save_suffix,
     )
     results = load_results_file(results_path)
+    results["__experiment_signature__"] = {
+        "entry_type": "experiment_signature",
+        "args": dict(vars(args)),
+    }
     processed_prompts = get_processed_prompts(results)
+
+    if not args.nosave:
+        save_results_file(results_path, results)
 
     # Setup compute
     set_seed()

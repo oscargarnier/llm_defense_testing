@@ -51,6 +51,11 @@ def print_successive_jailbroken_responses(results, prompt_number, trim = 10000):
 ## Autodan output print functions
 ##############################################################################################################
 
+def average_num_trials(results):
+    num_trials = [len(results[prompt_number]["log"]["success"]) for prompt_number in results.keys()]
+    return sum(num_trials)/len(num_trials)
+
+
 def print_keys(results):
     print(results["0"].keys())
 
@@ -64,6 +69,7 @@ def count_jailbroken(results):
         if results[prompt_number]['is_success']:
             jailbroken_count += 1
     print(f"Total jailbroken prompts: {jailbroken_count} out of {len(results)}")
+    print(f"Percentage of jailbroken prompts: {jailbroken_count/len(results)*100:.2f}%")
     return jailbroken_count
 
 def expose_artifact(results, key):
