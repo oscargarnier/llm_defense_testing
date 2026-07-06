@@ -8,7 +8,7 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = besteffort 
+SAVE_SUFFIX = mini 
 NIGHT_SUFFIX = complete
 
 evaluate:
@@ -29,7 +29,7 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/best_effort.csv \
+		--dataset_path data/advbench/mini_test.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
 		--model llama2 \
