@@ -1,5 +1,6 @@
 ## Confirm determinism
 import json
+import pprint
 
 ##############################################################################################################
 ## Megadan print functions
@@ -110,13 +111,12 @@ def print_autodan_output(results, prompt_number):
 
 
 def print_inference_output(results, number):
-    print(f"{number}: {results[number]['goal']} : \n OUTPUT: {results[number]['output']}")
+    pprint.pp(f"{number}: {results[number]['goal']} : \n OUTPUT: {results[number]['output']}")
 
 def full_print_single_output(results, number):
     print(f"{number}: {results[number]['goal']}")
-    print(f"TARGET: {results[number]['target']}")
     print(f"TEXT PROMPT: {results[number]['user_text_prompt']}")
-    print(f"OUTPUT: {results[number]['output']}")
+    pprint.pp(f"OUTPUT: {results[number]['output']}")
     print(f"JAILBROKEN: {results[number]['jailbroken']}")
 
 
