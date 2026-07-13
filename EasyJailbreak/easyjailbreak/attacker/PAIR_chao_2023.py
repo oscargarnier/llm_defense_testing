@@ -151,6 +151,7 @@ class PAIR(AttackerBase):
             return None, None
 
         json_str = s[start_pos:end_pos]
+        print(f"Extracted potential JSON structure, start {start_pos}, end {end_pos}:\n {json_str}")
         json_str = json_str.replace("\n", "")  # Remove all line breaks
 
         try:
