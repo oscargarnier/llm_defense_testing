@@ -19,3 +19,13 @@ AutoDAN/results/autodan_hga/llama2_0_nightrun.json
 
 defense_testing_results/AUTODAN/SmoothLLM/llama2_swap7.json
 
+RESTA_VLM/data/
+RESTA_VLM/open?id=1ZrvSHklXiGYhpiVoxUH8FWc5k0fv2xVZ&authuser=0
+RESTA_VLM/results/
+RESTA_VLM/view?usp%3Ddrive_link&sa=D&source=editors&ust=1783336461278845&usg=AOvVaw03gRzxVzO0Tan-Y1A9HJ_w
+data/JailBreakV_28k/
+data/__MACOSX/
+jboutput.txt
+vicuna-13b-v1.5_gpt4_gpt4_AdvBench_result.jsonl
+
+
