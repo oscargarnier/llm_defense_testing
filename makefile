@@ -11,8 +11,9 @@ ATTACK = AUTODAN
 SAVE_SUFFIX = mini 
 NIGHT_SUFFIX = complete
 
-easy:
-	python easyjb.py | tee jboutput.txt
+pair:
+	python pair_testing.py | tee jboutput.txt
+
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \

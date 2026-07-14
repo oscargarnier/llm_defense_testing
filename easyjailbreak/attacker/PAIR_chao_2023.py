@@ -90,6 +90,7 @@ class PAIR(AttackerBase):
         :param int n_iterations: Maximum number of iterations to run if it keeps failing to jailbreak.
         """
         super().__init__(attack_model, target_model, eval_model, jailbreak_datasets)
+        print('I EXIST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         self.current_query: int = 0
         self.current_jailbreak: int = 0
         self.current_reject: int = 0
@@ -178,11 +179,13 @@ class PAIR(AttackerBase):
         self.attack_model.set_system_message(self.attack_system_message.format(query=instance.query,
                                                                                reference_responses=
                                                                                instance.reference_responses[0]))
-
+        current_conv = self.attack_model.conversation
         instance.attack_attrs.update({
             'attack_conversation': copy.deepcopy(self.attack_model.conversation)}
         )
+        print(f"checkpoint 1: {current_conv == instance.attack_attrs["attack_conversation"]}")
         batch = [instance.copy() for _ in range(self.n_streams)]
+        print(f'once batched, its {current_conv == batch[0].attack_attrs["attack_conversation"]}')
 
         for iteration in range(1, self.n_iterations + 1):
             print('')
