@@ -34,7 +34,7 @@ class PAIR(AttackerBase):
         >>> from easyjailbreak.models.openai_model import OpenaiModel
         >>>
         >>> # First, prepare models and datasets.
-        >>> attack_model = HuggingfaceModel(attack_model_path='lmsys/vicuna-13b-v1.5',
+        >>> attack_model = HuggingfaceModel(model_name_or_path='lmsys/vicuna-13b-v1.5',
         >>>                                template_name='vicuna_v1.1')
         >>> target_model = HuggingfaceModel(model_name_or_path='meta-llama/Llama-2-7b-chat-hf',
         >>>                                 template_name='llama-2')
@@ -205,8 +205,12 @@ class PAIR(AttackerBase):
                 if isinstance(self.attack_model, HuggingfaceModel):
                     stream.attack_attrs['attack_conversation'].append_message(
                         stream.attack_attrs['attack_conversation'].roles[1], init_message)
-                    stream.jailbreak_prompt = stream.attack_attrs['attack_conversation'].get_prompt()[
-                                              :-len(stream.attack_attrs['attack_conversation'].sep2)]
+                    full_prompt = stream.attack_attrs['attack_conversation'].get_prompt()
+                    sep2 = getattr(stream.attack_attrs['attack_conversation'], 'sep2', None)
+                    if sep2:
+                        stream.jailbreak_prompt = full_prompt[:-len(sep2)]
+                    else:
+                        stream.jailbreak_prompt = full_prompt
                 if isinstance(self.attack_model, OpenaiModel):
                     stream.jailbreak_prompt = stream.attack_attrs['attack_conversation'].to_openai_api_messages()
 
