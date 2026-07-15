@@ -118,12 +118,19 @@ class HuggingfaceModel(WhiteBoxModelBase):
             messages = [messages]
         prompt = self.create_conversation_prompt(messages, clear_old_history=clear_old_history)
 
-        input_ids = self.tokenizer(prompt,
-                                   return_tensors='pt',
-                                   add_special_tokens=False).input_ids.to(self.model.device.index)
+        tokenized_inputs = self.tokenizer(prompt,
+                                          return_tensors='pt',
+                                          add_special_tokens=False)
+        input_ids = tokenized_inputs.input_ids.to(self.model.device.index)
+        attention_mask = getattr(tokenized_inputs, 'attention_mask', None)
+        if attention_mask is None:
+            attention_mask = torch.ones_like(input_ids)
+        else:
+            attention_mask = attention_mask.to(self.model.device.index)
         input_length = len(input_ids[0])
 
         kwargs.update({input_field_name: input_ids})
+        kwargs.setdefault('attention_mask', attention_mask)
         output_ids = self.model.generate(**kwargs, **self.generation_config)
         output = self.tokenizer.decode(output_ids[0][input_length:], skip_special_tokens=True)
 

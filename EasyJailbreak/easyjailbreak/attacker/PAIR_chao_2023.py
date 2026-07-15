@@ -219,6 +219,7 @@ class PAIR(AttackerBase):
                                                      prompt_format=stream.jailbreak_prompt)[0]
                     self.attack_model.conversation.messages = []  # clear the conversation history generated during mutation.
                     if "gpt" not in stream.attack_attrs['attack_conversation'].name:
+                        print(f"Attempting to extract JSON from: {init_message + new_instance.jailbreak_prompt}")
                         new_prompt, json_str = self.extract_json(init_message + new_instance.jailbreak_prompt)
                     else:
                         new_prompt, json_str = self.extract_json(new_instance.jailbreak_prompt)
