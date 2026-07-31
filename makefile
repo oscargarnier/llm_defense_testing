@@ -1,6 +1,10 @@
+## Useful commands for running the AutoDAN evaluation framework
+
 
 MODEL_NAME = lmsys/vicuna-7b-v1.5
 
+# No internet access when within a process container,
+# So the model needs to be downloaded first
 download_model:
 	hf download $(MODEL_NAME)
 
@@ -9,8 +13,6 @@ TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
 SAVE_SUFFIX = mini 
-NIGHT_SUFFIX = complete
-
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
@@ -20,12 +22,14 @@ evaluate:
 		--inference_batch_size 6 \
 		--target_model llama2 
 
-
+# This is used to compare two output files
+# Those of the same model but autodan vs inference
 confirm_determinism:
 	python dictionary_utils.py \
 		--reference_outputs AutoDAN/results/autodan_hga/vicuna_0_local.json \
 		--new_outputs AutoDAN/results/autodan_hga/vicuna_0_normal.json \
 
+# Example of autodan attack
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
@@ -34,6 +38,9 @@ autodan:
 		--save_suffix $(SAVE_SUFFIX) \
 		--model llama2 \
 
+# This is an example of the full pipeline
+# You can specify the attack artifacts that you want
+# The defense you want to apply
 smooth_llm_evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
@@ -47,6 +54,9 @@ smooth_llm_evaluate:
 		--smoothllm_num_copies 7 \	
 		--smoothllm_batch_size 7
 
+## This is used for the seperate nightrun evaluation
+NIGHT_SUFFIX = complete
+
 nightrun:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
@@ -55,6 +65,7 @@ nightrun:
 		--save_suffix $(NIGHT_SUFFIX) \
 		--model vicuna \
 
+## Testing the the autodan attack for 100 iterations regardless
 megadan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
