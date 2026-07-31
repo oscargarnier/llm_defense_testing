@@ -1,7 +1,7 @@
 ## Useful commands for running the AutoDAN evaluation framework
 
 
-MODEL_NAME = lmsys/vicuna-7b-v1.5
+MODEL_NAME = JosephusCheung/Guanaco
 
 # No internet access when within a process container,
 # So the model needs to be downloaded first
@@ -12,15 +12,22 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = mini 
+SAVE_SUFFIX = complete 
+NIGHT_SUFFIX = complete
+
+pair:
+	python pair_testing.py | tee jboutput.txt
+
+>>>>>>> 4dbf7fd14495a8bd05bdd23a714fecaf33713b30
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_besteffort.json" \
+		--attack_logfile "AutoDAN/results/autodan_hga/vicuna_0_complete.json" \
 		--max_new_tokens 512 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--inference_batch_size 6 \
-		--target_model llama2 
+		--inference_batch_size 8 \
+		--target_model vicuna \
+		--device 1
 
 # This is used to compare two output files
 # Those of the same model but autodan vs inference
@@ -33,10 +40,10 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/mini_test.csv \
+		--dataset_path data/advbench/harmful_behaviors.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--model llama2 \
+		--model guanaco \
 
 # This is an example of the full pipeline
 # You can specify the attack artifacts that you want
@@ -63,7 +70,7 @@ nightrun:
 		--dataset_path data/advbench/harmful_behaviors.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(NIGHT_SUFFIX) \
-		--model vicuna \
+		--model guanaco \
 
 ## Testing the the autodan attack for 100 iterations regardless
 megadan:
