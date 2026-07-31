@@ -8,7 +8,7 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = mini 
+SAVE_SUFFIX = complete 
 NIGHT_SUFFIX = complete
 
 pair:
@@ -17,11 +17,12 @@ pair:
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_besteffort.json" \
+		--attack_logfile "AutoDAN/results/autodan_hga/vicuna_0_complete.json" \
 		--max_new_tokens 512 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--inference_batch_size 6 \
-		--target_model llama2 
+		--inference_batch_size 8 \
+		--target_model vicuna \
+		--device 1
 
 
 confirm_determinism:
