@@ -3,7 +3,7 @@ MODEL_PATH_DICTS = {
     "llama3-1b": "~/.cache/huggingface/hub/models--meta-llama--Llama-3.2-1B/snapshots/4e20de362430cd3b72f300e6b0f18e50e7166e08",
     "vicuna": "~/.cache/huggingface/hub/models--lmsys--vicuna-7b-v1.5/snapshots/3321f76e3f527bd14065daf69dad9344000a201d",
     "new_vicuna": "/mnt/volatile/users/ogarnier/hub/models--lmsys--vicuna-7b-v1.5/snapshots/3321f76e3f527bd14065daf69dad9344000a201d",
-    "guanaco": "./models/guanaco/guanaco-7B-HF",
+    "guanaco": "/home/lamsade/ogarnier/.cache/huggingface/hub/models--JosephusCheung--Guanaco/snapshots/bed6f3bd18f07a4a379525645cbd86d622b12836",
     "WizardLM": "./models/WizardLM/WizardLM-7B-V1.0",
     "mpt-chat": "./models/mpt/mpt-7b-chat",
     "mpt-instruct": "./models/mpt/mpt-7b-instruct",

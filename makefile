@@ -1,5 +1,5 @@
 
-MODEL_NAME = lmsys/vicuna-7b-v1.5
+MODEL_NAME = JosephusCheung/Guanaco
 
 download_model:
 	hf download $(MODEL_NAME)
@@ -32,10 +32,10 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/mini_test.csv \
+		--dataset_path data/advbench/harmful_behaviors.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--model llama2 \
+		--model guanaco \
 
 smooth_llm_evaluate:
 	python evaluate_defenses.py \
@@ -56,7 +56,7 @@ nightrun:
 		--dataset_path data/advbench/harmful_behaviors.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(NIGHT_SUFFIX) \
-		--model vicuna \
+		--model guanaco \
 
 megadan:
 	python AutoDAN/autodan_eval.py \
