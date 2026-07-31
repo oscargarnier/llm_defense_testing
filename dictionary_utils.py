@@ -89,7 +89,7 @@ def print_jailbroken(results, number = None):
             print(f"{number} is not jailbroken.")
 
 def print_jailbreak(results, number):
-    print(f"{number}: {results[number]['final_suffix']}")
+    pprint.pprint(f"{number}: {results[number]['final_suffix']}")
 
 def check_in_log_for_differences(results, prompt_number):
     current_suf = ""
@@ -100,7 +100,8 @@ def check_in_log_for_differences(results, prompt_number):
         print(suf)
 
 def print_autodan_output(results, prompt_number):
-    print(f"FINAL RESPOND: \n\n {results[prompt_number]['final_respond']}")
+    pprint.pprint(f"{prompt_number}: {results[prompt_number]['goal']}")
+    pprint.pprint(f"FINAL RESPOND: \n\n {results[prompt_number]['final_respond']}")
 
 
 
