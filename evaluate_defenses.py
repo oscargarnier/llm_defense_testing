@@ -165,7 +165,7 @@ if __name__ == '__main__':
     parser.add_argument( '--trial', type=int, default=0)
 
     # Targeted LLM
-    parser.add_argument( '--target_model', type=str, default='llama2', choices=['vicuna', 'llama2'])
+    parser.add_argument( '--target_model', type=str, default='llama2', choices=['vicuna', 'llama2', 'guanaco'])
 
     # Experimental setup
     parser.add_argument( '--attack_logfile', type=str, default='data/GCG/vicuna_behaviors.json')

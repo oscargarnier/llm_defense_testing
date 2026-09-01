@@ -22,11 +22,11 @@ pair:
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/vicuna_0_complete.json" \
+		--attack_logfile "AutoDAN/results/autodan_hga/guanaco_0_complete.json" \
 		--max_new_tokens 512 \
 		--save_suffix $(SAVE_SUFFIX) \
 		--inference_batch_size 8 \
-		--target_model vicuna \
+		--target_model guanaco \
 		--device 1
 
 # This is used to compare two output files
