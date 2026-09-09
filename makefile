@@ -12,8 +12,7 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = long
-NIGHT_SUFFIX = complete
+SAVE_SUFFIX = reject 
 
 pair:
 	python pair_testing.py | tee jboutput.txt
@@ -39,7 +38,7 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/harmful_behaviors.csv \
+		--dataset_path data/advbench/.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
 		--model guanaco \
@@ -61,15 +60,15 @@ smooth_llm_evaluate:
 		--smoothllm_batch_size 7
 
 ## This is used for the seperate nightrun evaluation
-NIGHT_SUFFIX = complete
+NIGHT_SUFFIX = reject 
 
 nightrun:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/harmful_behaviors.csv \
+		--dataset_path data/strong_reject/strongreject_compiled.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(NIGHT_SUFFIX) \
-		--model guanaco \
+		--model vicuna \
 
 ## Testing the the autodan attack for 100 iterations regardless
 megadan:
