@@ -157,6 +157,7 @@ def highlight_difference_window(text, diff_idx, prefix_chars=6, window_chars=120
 
 def confirm_determinism(attack_logfile, defense_testing_results):
     count = 0
+    indices = []
     with open(attack_logfile, "r") as f:
         attacks = json.load(f)
     with open(defense_testing_results, "r") as f:
@@ -170,6 +171,8 @@ def confirm_determinism(attack_logfile, defense_testing_results):
             count += 1
             continue
 
+        ## Here, non determinism identified
+        indices.append(key)
         diff_idx = first_difference_index(jailbreak_output, inference_output)
         a_start, a_snippet = highlight_difference_window(jailbreak_output, diff_idx)
         b_start, b_snippet = highlight_difference_window(inference_output, diff_idx)
@@ -184,6 +187,7 @@ def confirm_determinism(attack_logfile, defense_testing_results):
         print(f"Determinism confirmed:\n {attack_logfile}\n {defense_testing_results}")
     else:
         print(f"Nondeterministic on {num_queries - count} out of {num_queries} queries")
+    return indices
 
 ##############################################################################################################
 ## Main function to run on command line

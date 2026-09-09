@@ -29,3 +29,6 @@ jboutput.txt
 vicuna-13b-v1.5_gpt4_gpt4_AdvBench_result.jsonl
 
 
+RESTA_VLM/*
+
+label_studio/
