@@ -1,7 +1,7 @@
 ## Useful commands for running the AutoDAN evaluation framework
 
 
-MODEL_NAME = JosephusCheung/Guanaco
+MODEL_NAME = meta-llama/Llama-2-7b
 
 # No internet access when within a process container,
 # So the model needs to be downloaded first
@@ -12,21 +12,20 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = complete 
+SAVE_SUFFIX = long
 NIGHT_SUFFIX = complete
 
 pair:
 	python pair_testing.py | tee jboutput.txt
 
->>>>>>> 4dbf7fd14495a8bd05bdd23a714fecaf33713b30
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/guanaco_0_complete.json" \
-		--max_new_tokens 512 \
+		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_complete.json" \
+		--max_new_tokens 1024 \
 		--save_suffix $(SAVE_SUFFIX) \
 		--inference_batch_size 8 \
-		--target_model guanaco \
+		--target_model llama2 \
 		--device 1
 
 # This is used to compare two output files
