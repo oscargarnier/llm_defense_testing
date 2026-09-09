@@ -20,11 +20,11 @@ pair:
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "AutoDAN/results/autodan_hga/llama2_0_complete.json" \
-		--max_new_tokens 1024 \
+		--attack_logfile "AutoDAN/results/autodan_hga/vicuna_0_reject.json" \
+		--max_new_tokens 512 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--inference_batch_size 8 \
-		--target_model llama2 \
+		--inference_batch_size 16 \
+		--target_model vicuna \
 		--device 1
 
 # This is used to compare two output files
@@ -69,6 +69,7 @@ nightrun:
 		--max_new_tokens 128 \
 		--save_suffix $(NIGHT_SUFFIX) \
 		--model vicuna \
+		--device 1
 
 ## Testing the the autodan attack for 100 iterations regardless
 megadan:
