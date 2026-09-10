@@ -68,7 +68,7 @@ nightrun:
 		--dataset_path data/strong_reject/strongreject_compiled.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(NIGHT_SUFFIX) \
-		--model vicuna \
+		--model llama2 \
 		--device 1
 
 ## Testing the the autodan attack for 100 iterations regardless
