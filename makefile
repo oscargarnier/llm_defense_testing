@@ -12,7 +12,7 @@ download_model:
 TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = AUTODAN
-SAVE_SUFFIX = reject 
+SAVE_SUFFIX = jbb 
 
 pair:
 	python pair_testing.py | tee jboutput.txt
@@ -20,7 +20,7 @@ pair:
 benign_evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
-		--attack_logfile "data/benign/benign.json" \
+		--attack_logfile "data/jailbreakbench/benign-behaviors_inference_compiled.json" \
 		--max_new_tokens 512 \
 		--save_suffix benign \
 		--inference_batch_size 16 \
@@ -38,6 +38,8 @@ evaluate:
 		--target_model vicuna \
 		--device 1
 
+
+
 # This is used to compare two output files
 # Those of the same model but autodan vs inference
 confirm_determinism:
@@ -49,10 +51,11 @@ confirm_determinism:
 autodan:
 	python AutoDAN/autodan_eval.py \
 		--attack_mode hga \
-		--dataset_path data/advbench/.csv \
+		--dataset_path data/jailbreakbench/harmful-behaviors_autodan_compiled.csv \
 		--max_new_tokens 128 \
 		--save_suffix $(SAVE_SUFFIX) \
-		--model guanaco \
+		--model llama2 \
+		--device 1
 
 # This is an example of the full pipeline
 # You can specify the attack artifacts that you want
