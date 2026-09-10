@@ -17,6 +17,17 @@ SAVE_SUFFIX = reject
 pair:
 	python pair_testing.py | tee jboutput.txt
 
+benign_evaluate:
+	python evaluate_defenses.py \
+		--attack $(ATTACK) \
+		--attack_logfile "data/benign/benign.json" \
+		--max_new_tokens 512 \
+		--save_suffix benign \
+		--inference_batch_size 16 \
+		--target_model vicuna \
+		--device 0
+
+
 evaluate:
 	python evaluate_defenses.py \
 		--attack $(ATTACK) \
