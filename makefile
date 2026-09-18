@@ -19,7 +19,7 @@ pair:
 
 benign_evaluate:
 	python evaluate_defenses.py \
-		--attack $(ATTACK) \
+		--attack None \
 		--attack_logfile "data/jailbreakbench/benign-behaviors_inference_compiled.json" \
 		--max_new_tokens 512 \
 		--save_suffix benign \
