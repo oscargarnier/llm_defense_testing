@@ -11,7 +11,7 @@ download_model:
 
 TARGET_MODEL = vicuna
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
-ATTACK = AUTODAN
+ATTACK = autodan
 SAVE_SUFFIX = jbb 
 
 pair:
@@ -19,10 +19,10 @@ pair:
 
 benign_evaluate:
 	python evaluate_defenses.py \
-		--attack NONE \
+		--attack noattack  \
 		--attack_logfile "data/jailbreakbench/benign-behaviors_inference_compiled.json" \
 		--max_new_tokens 512 \
-		--save_suffix benign \
+		--save_suffix jbb_benign \
 		--inference_batch_size 16 \
 		--target_model $(TARGET_MODEL) \
 		--device 0

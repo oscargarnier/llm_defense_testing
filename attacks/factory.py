@@ -19,7 +19,7 @@ def get_attack(attack_type: str, logfile=None, target_model=None, tokenizer = No
             tokenizer = tokenizer, 
             conv_template = conv_template 
         )
-    if cls == NONE:
+    if cls == NoAttack:
         return NoAttack(
             logfile=logfile, 
             target_model=target_model, 
