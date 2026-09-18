@@ -14,6 +14,11 @@ class Prompt:
 
 class JailbreakArtifact(Prompt):
     def __init__(self, goal, user_text_prompt, attack_type, model_name):
+        """
+        goal: the goal of the jailbreak, this value is for reference, should not be used in inference
+        user_text_prompt: the prompt that will be sent to the model, this should be created correctly by your attack
+        attack_type: the type of attack, this value is for reference, for labeling purposes only
+        """
         self.goal = goal
         self.user_text_prompt = user_text_prompt
         self.attack_type = attack_type
@@ -62,4 +67,19 @@ class NoAttack(Attack):
     def __init__(self, logfile=None, target_model=None, tokenizer = None, conv_template = None):
         super(NoAttack, self).__init__(logfile,target_model)
 
+        self.tokenizer = tokenizer
+        self.conv_template = conv_template
+
+        with open(self.logfile, 'r') as f:
+            log = json.load(f)
+
+        # Enables obj[i]
+        self.prompts = [
+            self.create_prompt(goal=query["goal"])
+            for query in log.values()
+        ]
+
+    def create_prompt(self, goal):
+
+        return JailbreakArtifact(goal, goal, "NoAttack", self.target_model)
 
