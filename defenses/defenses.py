@@ -20,6 +20,10 @@ class Defense:
             return self.forward_autodan_batch(
                 jailbreak_artifacts, gen_config, batch_size=batch_size
             )
+        elif jailbreak_artifacts[0].attack_type == "NoAttack":
+            return self.forward_autodan_batch(
+                jailbreak_artifacts, gen_config, batch_size=batch_size
+            )
 
     def forward_autodan(self, jailbreak_artifact, gen_config):
         conv_template = load_conversation_template(jailbreak_artifact.model_name)
