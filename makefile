@@ -9,7 +9,7 @@ download_model:
 	hf download $(MODEL_NAME)
 
 
-TARGET_MODEL = vicuna
+TARGET_MODEL = llama2
 LOG_FILE = data/AutoDAN/llama-2-7b-chat-hf_behaviors.json
 ATTACK = autodan
 SAVE_SUFFIX = jbb 
@@ -25,7 +25,7 @@ benign_evaluate:
 		--save_suffix jbb_benign \
 		--inference_batch_size 16 \
 		--target_model $(TARGET_MODEL) \
-		--device 0
+		--device 1
 
 
 evaluate:
