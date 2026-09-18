@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
     # Experimental setup
     parser.add_argument( '--attack_logfile', type=str, default='data/GCG/vicuna_behaviors.json')
-    parser.add_argument( '--attack', type=str, default='AUTODAN', choices=['AUTODAN', 'PAIR', 'GCG','NONE'])
+    parser.add_argument( '--attack', type=str, default='AUTODAN', choices=['autodan', 'pair', 'gcg','noattack'])
     parser.add_argument( '--defense', type=str, default='NoDefense', choices=[ 'NoDefense', 'SmoothLLM' ])
 
     # SmoothLLM arguments

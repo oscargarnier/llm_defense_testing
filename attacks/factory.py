@@ -4,7 +4,7 @@ from attacks.attacks import NoAttack
 
 ATTACK_REGISTRY = {
     "autodan": AutoDAN,
-    "none": NoAttack
+    "noattack": NoAttack
 }
 
 
