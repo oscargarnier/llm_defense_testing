@@ -54,3 +54,12 @@ class AutoDAN(Attack):
         user_text_prompt = final_suffix.replace('[REPLACE]', goal.lower()) ## note this line is from string utils
 
         return JailbreakArtifact(goal, user_text_prompt, "AutoDAN", self.target_model)
+
+class NoAttack(Attack):
+    """
+    Vanilla inference
+    """
+    def __init__(self, logfile=None, target_model=None, tokenizer = None, conv_template = None):
+        super(NoAttack, self).__init__(logfile,target_model)
+
+
